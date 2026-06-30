@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: name-pod-nginx
+  # generateName: name-pod-  #alternativa a name, genera un nombre agregando un sufijo
+  namespace: default
+  labels: 
+    app: nginx
+    tier: backend
+    env: prod
+    version: v1
+  annotations:
+    description: "pod for learning"
+    owner: "aldair"
+spec:
+  containers:
+    - name: app
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+      env:
+        - name: NODE_ENV
+          value: development
+      resources:
+        requests:
+          cpu: "250m"
+          memory: "128Mi"
+        limits:
+          cpu: "1000m"
+          memory: "256Mi"
+      command: ["/usr/bin/sh", "-c"]
+      args: ["echo /etc/hosts > ~/test.txt && sleep 3600"]
